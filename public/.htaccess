@@ -1,0 +1,12 @@
+# Enable rewrite engine
+RewriteEngine On
+
+# Redirect any direct request to the 'server' directory to the root directory
+RewriteRule ^server/ / [R=302,L,NC]
+
+# Redirect all errors to the root directory
+ErrorDocument 400 /
+ErrorDocument 401 /
+ErrorDocument 403 /
+ErrorDocument 404 /
+ErrorDocument 500 /
