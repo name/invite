@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  invite:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: invite
+    restart: unless-stopped
+    volumes:
+      - ./public:/var/www/html
+    depends_on:
+      - composer
+
+  composer:
+    image: composer:2
+    container_name: composer
+    volumes:
+      - ./public:/app
+
+  invite-db:
+    image: mysql:latest
+    container_name: invite-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: password_here
+      MYSQL_DATABASE: invite
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password_here
+    volumes:
+      - invite-data:/var/lib/mysql
+
+volumes:
+  invite-data:
+    driver: local
